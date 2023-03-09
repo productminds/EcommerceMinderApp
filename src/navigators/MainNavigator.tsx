@@ -1,9 +1,10 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createNavigatorParams} from '../utils/navigation';
+import HomeNavigator from './HomeNavigator';
+import SigninScreen from '../screens/SigninScreen';
 
 type MainNavigatorStackParamList = {
-  Home: undefined;
+  Main: undefined;
   Signin: undefined;
   Signup: undefined;
 };
@@ -13,17 +14,11 @@ const Stack = createNativeStackNavigator<MainNavigatorStackParamList>();
 const MainNavigator = (): JSX.Element => {
   return (
     <Stack.Navigator
-      initialRouteName={'Home'}
+      initialRouteName={'Main'}
       screenOptions={{headerShown: false}}>
-      <Stack.Screen
-        {...createNavigatorParams<MainNavigatorStackParamList>('Home')}
-      />
-      <Stack.Screen
-        {...createNavigatorParams<MainNavigatorStackParamList>('Signin')}
-      />
-      <Stack.Screen
-        {...createNavigatorParams<MainNavigatorStackParamList>('Signup')}
-      />
+      <Stack.Screen name="Main" component={HomeNavigator} />
+      <Stack.Screen name="Signin" component={SigninScreen} />
+      <Stack.Screen name="Signup" component={SigninScreen} />
     </Stack.Navigator>
   );
 };
