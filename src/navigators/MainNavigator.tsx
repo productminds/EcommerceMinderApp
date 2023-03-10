@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator<MainNavigatorStackParamList>();
 const MainNavigator = (): JSX.Element => {
   return (
     <Stack.Navigator
-      initialRouteName={'Main'}
+      initialRouteName={'Signin'}
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Main" component={HomeNavigator} />
       <Stack.Screen name="Signin" component={SigninScreen} />
