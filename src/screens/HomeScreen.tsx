@@ -1,12 +1,12 @@
 import {Text} from 'react-native-paper';
-import {View} from 'react-native';
 import React from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const HomeScreen = (): JSX.Element => {
   return (
-    <View>
-      <Text>asdassdadsjdfshifgdfyi</Text>
-    </View>
+    <SafeAreaView>
+      <Text>Welcome - Home Screen</Text>
+    </SafeAreaView>
   );
 };
 
