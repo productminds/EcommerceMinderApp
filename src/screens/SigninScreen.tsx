@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import {SafeAreaView, ScrollView, Text, View, StyleSheet, Image} from 'react-native';
 import { TextInput, Button, TouchableRipple } from 'react-native-paper';
 import { COLORS, SIZES, FONTS } from '../utils/constants/theme';
@@ -6,7 +7,11 @@ import { COLORS, SIZES, FONTS } from '../utils/constants/theme';
 const SigninScreen = (): JSX.Element => {
 
   const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState();
+  const [password, setPassword] = React.useState("");
+
+  const handleSignIn = () => {
+    console.log("Sign in")
+  }
 
   return (
     <SafeAreaView>
@@ -30,7 +35,7 @@ const SigninScreen = (): JSX.Element => {
             mode="outlined"
             label="Password"
             value={password}
-            onChangeText={(password) => setEmail(password)}
+            onChangeText={(password) => setPassword(password)}
             secureTextEntry
             right={<TextInput.Icon icon="eye" iconColor={COLORS.primary}/>}
             style={styles.input}
@@ -43,7 +48,7 @@ const SigninScreen = (): JSX.Element => {
           </TouchableRipple>
         </View>
         <View  style={styles.subcontainer}>
-          <Button style={styles.signInButton} textColor={COLORS.white} onPress={() => console.log("Sign in")}>
+          <Button style={styles.signInButton} textColor={COLORS.white} onPress={handleSignIn}>
             Sign In
           </Button>
           <View style={styles.subcontainer}>
