@@ -14,6 +14,18 @@ const SigninScreen = (): JSX.Element => {
     console.log("Sign in")
   }
 
+  const handleGoogleSignIn = () => {
+    console.log("Google sign in")
+  }
+
+  const handleSwitchToSignUp = () => {
+    // navigate to SignInScreen
+  }
+
+  const handleForgotPassword = () => {
+    console.log("Forgot Password")
+  }
+
   return (
     <SafeAreaView>
       <ScrollView style={stylesContainer.container}>
@@ -44,7 +56,7 @@ const SigninScreen = (): JSX.Element => {
             activeOutlineColor={COLORS.primary}
             selectionColor={COLORS.primary}
           />
-          <TouchableRipple style={stylesAuth.forgotPassword} onPress={() => console.log("Forgot password")}>
+          <TouchableRipple style={stylesAuth.forgotPassword} onPress={handleForgotPassword}>
             <Text style={stylesAuth.primaryColorText}>Forgot Password</Text>
           </TouchableRipple>
         </View>
@@ -54,7 +66,7 @@ const SigninScreen = (): JSX.Element => {
           </Button>
           <View style={stylesContainer.subcontainer}>
             <Text>Or continue with</Text>
-            <TouchableRipple style={stylesAuth.googleContainer} onPress={() => console.log("Google sign in")}>
+            <TouchableRipple style={stylesAuth.googleContainer} onPress={handleGoogleSignIn}>
               <Image source={require('../utils/assets/icons/google.png')} style={stylesAuth.googleLogo}/>
             </TouchableRipple>
           </View>
@@ -62,7 +74,7 @@ const SigninScreen = (): JSX.Element => {
         <View style={stylesContainer.subcontainer}>
           <View style={stylesContainer.subcontainerHorizontal}>
               <Text>Don't have an account?</Text>
-              <TouchableRipple onPress={() => console.log("Sign Up here")}>
+              <TouchableRipple onPress={handleSwitchToSignUp}>
                 <Text style={stylesAuth.primaryColorText}>Sign up here</Text>
               </TouchableRipple>
           </View>
