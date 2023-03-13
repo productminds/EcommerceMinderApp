@@ -1,11 +1,15 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, Text, View, StyleSheet, Image} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View, Image} from 'react-native';
 import { TextInput, Button, TouchableRipple } from 'react-native-paper';
 import { COLORS } from '../utils/constants/theme';
 import stylesAuth from '../styles/auth.style';
 import stylesContainer from '../styles/container.style';
+import {MainNavigatorStackParamList} from '../navigators/MainNavigator';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-const SigninScreen = (): JSX.Element => {
+type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
+
+const SigninScreen = ({ navigation }: Props): JSX.Element => {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -20,6 +24,7 @@ const SigninScreen = (): JSX.Element => {
 
   const handleSwitchToSignUp = () => {
     // navigate to SignInScreen
+    navigation.navigate("Signup")
   }
 
   const handleForgotPassword = () => {
