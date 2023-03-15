@@ -1,45 +1,55 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, Image} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import auth from '@react-native-firebase/auth';
-
+import Config from 'react-native-config';
 import styles from './styles';
 import {Colors} from '../../utils/constants/theme';
 import {MainNavigatorStackParamList} from '../../navigators/MainNavigator';
 import DefaultScreenLayout from '../../components/DefaultScreenLayout';
 
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {useAuthContext} from '../../contexts/AuthContext';
+import {useAuth} from '../../hooks/useAuth';
+
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
 
 const SigninScreen = ({navigation}: Props): JSX.Element => {
+  const [email, setEmail] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
 
-  GoogleSignin.configure({
-    webClientId: '799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com',
-  });
+  const {loading: userLoading, googleSignIn: googleSignIn} = useAuth();
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const {setUser} = useAuthContext();
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     console.log('Sign in');
   };
 
   const handleGoogleSignIn = async () => {
     console.log('Google sign in');
+
+    // console.log(userLoading);
+    // await googleSignIn().then((user) => {
+    //   setUser(user)
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
+
     const {idToken} = await GoogleSignin.signIn();
+
+    console.log(idToken);
 
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
+    console.log(googleCredential);
+
     const userSignIn = auth().signInWithCredential(googleCredential);
 
-    userSignIn.then((user)=> {
-      console.log(user)
-    }).catch((error) => {
-      console.log(error)
-    })
-
+    // console.log(userLoading);
   };
 
   const handleSwitchToSignUp = () => {
@@ -49,6 +59,13 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
   const handleForgotPassword = () => {
     console.log('Forgot Password');
   };
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com',
+    });
+  }, []);
 
   return (
     <DefaultScreenLayout>
@@ -106,35 +123,13 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
             />
           </TouchableRipple>
         </View>
-        <View style={[styles.subcontainer, styles.subcontainerAuthButtons]}>
-          <View style={styles.buttonContainer}>
-            <Button
-              textColor={Colors.white}
-              onPress={handleSignIn}
-              style={styles.signInButton}
-              mode="contained">
-              Sign in
-            </Button>
-          </View>
-          <View style={styles.subcontainer}>
-            <Text style={styles.text}>Or continue with</Text>
-            <TouchableRipple
-              style={styles.googleContainer}
-              onPress={handleGoogleSignIn}>
-              <Image
-                source={require('../../utils/assets/icons/google.png')}
-                style={styles.googleLogo}
-              />
-            </TouchableRipple>
-          </View>
-        </View>
-        <View style={styles.subcontainer}>
-          <View style={styles.subcontainerHorizontal}>
-            <Text style={styles.text}>Don't have an account?</Text>
-            <TouchableRipple onPress={handleSwitchToSignUp}>
-              <Text style={styles.primaryColorText}>Sign up here</Text>
-            </TouchableRipple>
-          </View>
+      </View>
+      <View style={styles.subcontainer}>
+        <View style={styles.subcontainerHorizontal}>
+          <Text>Don't have an account?</Text>
+          <TouchableRipple onPress={handleSwitchToSignUp}>
+            <Text style={styles.primaryColorText}>Sign up here</Text>
+          </TouchableRipple>
         </View>
       </View>
     </DefaultScreenLayout>
