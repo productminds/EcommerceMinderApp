@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const SignupScreen = (): JSX.Element => {
   return (
-    <View>
-      <Text>Oi</Text>
-    </View>
+    <SafeAreaView>
+      <Text>Signup</Text>
+    </SafeAreaView>
   );
 };
 
