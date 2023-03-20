@@ -1,4 +1,4 @@
-package com.ecommerceminderapp;
+package com.productminds.minderapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

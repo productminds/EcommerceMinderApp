@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "799762509157",
+    "project_id": "ecommerceminderapp",
+    "storage_bucket": "ecommerceminderapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799762509157:android:16318fc4fdb5faa9ecc58c",
+        "android_client_info": {
+          "package_name": "com.productminds.minderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799762509157-ec13rjjueuf89g9lokhok3u52lkflj3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.productminds.minderapp",
+            "certificate_hash": "33a92615ca2501ce42fc121d53e51983b3dd2cbe"
+          }
+        },
+        {
+          "client_id": "799762509157-mhqn9ca460ql82dem37bqfduois6ph79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.productminds.minderapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwvYDd7yCEYx7yF4lMO4DcQdotQe5-jMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

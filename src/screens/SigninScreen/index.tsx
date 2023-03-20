@@ -1,15 +1,24 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
-import styles from './styles';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import auth from '@react-native-firebase/auth';
+
+import styles from './styles';
 import {Colors} from '../../utils/constants/theme';
 import {MainNavigatorStackParamList} from '../../navigators/MainNavigator';
 import DefaultScreenLayout from '../../components/DefaultScreenLayout';
 
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
 type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
 
 const SigninScreen = ({navigation}: Props): JSX.Element => {
+
+  GoogleSignin.configure({
+    webClientId: '799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com',
+  });
+
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -17,8 +26,20 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
     console.log('Sign in');
   };
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     console.log('Google sign in');
+    const {idToken} = await GoogleSignin.signIn();
+
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    const userSignIn = auth().signInWithCredential(googleCredential);
+
+    userSignIn.then((user)=> {
+      console.log(user)
+    }).catch((error) => {
+      console.log(error)
+    })
+
   };
 
   const handleSwitchToSignUp = () => {
