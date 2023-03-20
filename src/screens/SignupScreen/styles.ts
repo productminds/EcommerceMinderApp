@@ -3,7 +3,7 @@ import {Colors, Fonts, Sizes} from '../../utils/constants/theme';
 
 export default StyleSheet.create({
   title: {
-    margin: 2 * Sizes.margin,
+    marginTop: 2 * Sizes.margin,
     ...Fonts.h4,
   },
   logo: {
@@ -23,19 +23,21 @@ export default StyleSheet.create({
     borderWidth: 1,
     height: 45,
   },
+  text: {
+    fontSize: 12,
+    fontFamily: 'Roboto-regular',
+  },
   primaryColorText: {
     color: Colors.primary,
     fontWeight: 'bold',
-    fontSize: 12
-  },
-  text: {
-    fontSize: 12
+    fontSize: 12,
+    fontFamily: 'Roboto-regular',
   },
   forgotPassword: {
     width: '80%',
     alignItems: 'flex-end',
   },
-  signInButton: {
+  signUpButton: {
     height: 45,
     justifyContent: 'center',
     marginBottom: Sizes.margin,
@@ -65,12 +67,8 @@ export default StyleSheet.create({
     padding: Sizes.margin,
     width: '100%',
   },
-  subcontainerAuthButtons: {
-    marginTop: 70
-  },
   subcontainerHorizontal: {
     width: '100%',
-    // margin: SIZES.margin,
     flexDirection: 'row',
     backgroundColor: Colors.white,
     justifyContent: 'space-evenly',

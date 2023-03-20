@@ -21,7 +21,6 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
   };
 
   const handleSwitchToSignUp = () => {
-    // navigate to SignInScreen
     navigation.navigate('Signup');
   };
 
@@ -65,7 +64,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
             <Text style={styles.primaryColorText}>Forgot Password</Text>
           </TouchableRipple>
         </View>
-        <View style={styles.subcontainer}>
+        <View style={[styles.subcontainer, styles.subcontainerAuthButtons]}>
           <View style={styles.buttonContainer}>
             <Button
               textColor={Colors.white}
@@ -76,7 +75,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
             </Button>
           </View>
           <View style={styles.subcontainer}>
-            <Text>Or continue with</Text>
+            <Text style={styles.text}>Or continue with</Text>
             <TouchableRipple
               style={styles.googleContainer}
               onPress={handleGoogleSignIn}>
@@ -89,7 +88,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
         </View>
         <View style={styles.subcontainer}>
           <View style={styles.subcontainerHorizontal}>
-            <Text>Don't have an account?</Text>
+            <Text style={styles.text}>Don't have an account?</Text>
             <TouchableRipple onPress={handleSwitchToSignUp}>
               <Text style={styles.primaryColorText}>Sign up here</Text>
             </TouchableRipple>
