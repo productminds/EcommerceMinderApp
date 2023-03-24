@@ -7,9 +7,8 @@ interface Filters {
   categories: ProductCategory[];
 }
 
-interface ProductsManagementContextProps {
+interface ProductsContext {
   products: Product[];
-  productsInCart: Product[];
 
   filteredProducts: Product[];
 
@@ -19,17 +18,11 @@ interface ProductsManagementContextProps {
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 
   handleCategoriesFilter: (categories: ProductCategory[]) => void;
-
-  addProductToCart: (product: Product) => void;
-  removeProductToCart: (product: Product) => void;
 }
 
-const ProductsManagementContext = createContext(
-  {} as ProductsManagementContextProps,
-);
+const ProductsContext = createContext({} as ProductsContext);
 
-export const useProductsManagementContext = () =>
-  useContext(ProductsManagementContext);
+export const useProductsContext = () => useContext(ProductsContext);
 
 interface ProductsManagementProviderProps {
   children: JSX.Element;
@@ -39,20 +32,7 @@ export default function ProductsManagementProvider({
   children,
 }: ProductsManagementProviderProps): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
-  const [productsInCart, setSelectProductsInCart] = useState<Product[]>([]);
   const [filters, setFilters] = useState<Filters>({categories: []} as Filters);
-
-  const addProductToCart = (product: Product) => {
-    const alreadyInCartProducts = [...productsInCart, product];
-
-    setSelectProductsInCart(alreadyInCartProducts);
-  };
-
-  const removeProductToCart = (product: Product) => {
-    const productsToSet = products.filter(p => p.id !== product.id);
-
-    setSelectProductsInCart(productsToSet);
-  };
 
   const handleCategoriesFilter = useCallback(
     (categories: ProductCategory[]) => {
@@ -71,10 +51,9 @@ export default function ProductsManagementProvider({
   }, [products, filters]);
 
   return (
-    <ProductsManagementContext.Provider
+    <ProductsContext.Provider
       value={{
         products,
-        productsInCart,
         filters,
         filteredProducts,
 
@@ -82,10 +61,8 @@ export default function ProductsManagementProvider({
 
         setFilters,
         setProducts,
-        addProductToCart,
-        removeProductToCart,
       }}>
       {children}
-    </ProductsManagementContext.Provider>
+    </ProductsContext.Provider>
   );
 }

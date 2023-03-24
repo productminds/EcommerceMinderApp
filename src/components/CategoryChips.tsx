@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Chip} from 'react-native-paper';
-import {useProductsManagementContext} from '../contexts/ProductsManagementContext';
+import {useProductsContext} from '../contexts/ProductsManagementContext';
 import {ProductCategory} from '../domain/models/product-category';
 import {Sizes, Colors} from '../utils/constants/theme';
 
@@ -35,7 +35,7 @@ const defaultCategory: ProductCategory = {
 };
 
 const CategoryChips = ({data}: CategoryChipsProps): JSX.Element => {
-  const {filters, handleCategoriesFilter} = useProductsManagementContext();
+  const {filters, handleCategoriesFilter} = useProductsContext();
 
   const addToFilters = useCallback(
     (item: ProductCategory) => {

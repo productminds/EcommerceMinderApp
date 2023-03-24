@@ -9,7 +9,7 @@ import {useProductCategories} from '../../hooks/useProductCategories';
 import ContentCards from '../../components/ContentCards';
 import {ProductsList} from '../../components/ProductsList';
 import {useProducts} from '../../hooks/useProducts';
-import {useProductsManagementContext} from '../../contexts/ProductsManagementContext';
+import {useProductsContext} from '../../contexts/ProductsManagementContext';
 
 const HomeScreen = (): JSX.Element => {
   const {
@@ -22,7 +22,7 @@ const HomeScreen = (): JSX.Element => {
     loading: productsLoading,
     fetchAll: fetchAllProducts,
   } = useProducts();
-  const {filteredProducts, setProducts} = useProductsManagementContext();
+  const {filteredProducts, setProducts} = useProductsContext();
   const [search, setSearch] = useState('');
 
   const handleLoad = useCallback(() => {
