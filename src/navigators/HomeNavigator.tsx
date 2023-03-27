@@ -2,7 +2,8 @@ import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import Icon from 'react-native-vector-icons/Feather';
+import {Colors} from '../utils/constants/theme';
+import ProductsManagementProvider from '../contexts/ProductsManagementContext';
 
 type HomeNavigatorTabParamList = {
   Home: undefined;
@@ -11,32 +12,26 @@ type HomeNavigatorTabParamList = {
 
 const BottomTab = createMaterialBottomTabNavigator<HomeNavigatorTabParamList>();
 
-const generateHomeIcon = ({color}: {color: string}) => (
-  <Icon name="home" color={color} size={26} />
-);
-
-const generateProfileIcon = ({color}: {color: string}) => (
-  <Icon name="user" color={color} size={26} />
-);
-
 const HomeNavigator = (): JSX.Element => {
   return (
-    <BottomTab.Navigator>
-      <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: generateHomeIcon,
-        }}
-      />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: generateProfileIcon,
-        }}
-      />
-    </BottomTab.Navigator>
+    <ProductsManagementProvider>
+      <BottomTab.Navigator activeColor={Colors.primary}>
+        <BottomTab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: 'home-account',
+          }}
+        />
+        <BottomTab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: 'face-woman-profile',
+          }}
+        />
+      </BottomTab.Navigator>
+    </ProductsManagementProvider>
   );
 };
 
