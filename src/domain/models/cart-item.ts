@@ -4,7 +4,7 @@ export class CartItem {
   readonly product: Product;
   readonly quantity: number;
 
-  constructor(init: CartItem) {
+  constructor(init: Omit<CartItem, 'itemsTotal'>) {
     this.product = init.product;
     this.quantity = init.quantity;
   }

@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, Card, IconButton, Text} from 'react-native-paper';
+import {useCartContext} from '../contexts/CartContext';
 import {Product} from '../domain/models/product';
 import {Sizes} from '../utils/constants/theme';
 
@@ -41,27 +42,36 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ProductCard = memo(
-  ({description, name, price, imageUri}: Product): JSX.Element => {
-    return (
-      <Card mode="outlined" style={styles.container} contentStyle={styles.card}>
-        <View style={styles.header}>
-          <View style={styles.headerText}>
-            <Text variant="titleLarge">{name}</Text>
-            <Text ellipsizeMode="tail" numberOfLines={2} variant="labelSmall">
-              {description}
-            </Text>
-          </View>
-          <Text>${price}</Text>
+export const ProductCard = memo((product: Product): JSX.Element => {
+  const {addProductItem, removeAllProductItems, checkIfIsOnCart} =
+    useCartContext();
+
+  const {imageUri, name, description, price} = product;
+
+  return (
+    <Card mode="outlined" style={styles.container} contentStyle={styles.card}>
+      <View style={styles.header}>
+        <View style={styles.headerText}>
+          <Text variant="titleLarge">{name}</Text>
+          <Text ellipsizeMode="tail" numberOfLines={2} variant="labelSmall">
+            {description}
+          </Text>
         </View>
-        <View style={styles.body}>
-          <Card.Cover source={{uri: imageUri, height: 20}} />
-        </View>
-        <View style={styles.action}>
-          <Button>Add to cart</Button>
-          <IconButton icon="heart" />
-        </View>
-      </Card>
-    );
-  },
-);
+        <Text>${price}</Text>
+      </View>
+      <View style={styles.body}>
+        <Card.Cover source={{uri: imageUri, height: 20}} />
+      </View>
+      <View style={styles.action}>
+        {checkIfIsOnCart(product) ? (
+          <Button onPress={() => removeAllProductItems(product)}>
+            Rem. from cart
+          </Button>
+        ) : (
+          <Button onPress={() => addProductItem(product)}>Add to cart</Button>
+        )}
+        <IconButton icon="heart" />
+      </View>
+    </Card>
+  );
+});
