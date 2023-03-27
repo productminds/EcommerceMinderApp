@@ -5,6 +5,7 @@ import {TextInput} from 'react-native-paper';
 interface SearchBarProps {
   value?: string;
   onChangeText: (value: string) => void;
+  onEndEditing: (value: string) => void;
 }
 
 const styles = StyleSheet.create({
@@ -14,7 +15,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const SearchBar = ({value, onChangeText}: SearchBarProps): JSX.Element => {
+const SearchBar = ({
+  value,
+  onChangeText,
+  onEndEditing,
+}: SearchBarProps): JSX.Element => {
   return (
     <TextInput
       value={value}
@@ -22,6 +27,7 @@ const SearchBar = ({value, onChangeText}: SearchBarProps): JSX.Element => {
       mode="outlined"
       right={<TextInput.Icon icon="magnify" />}
       onChangeText={onChangeText}
+      onEndEditing={e => onEndEditing(e.nativeEvent.text)}
     />
   );
 };
