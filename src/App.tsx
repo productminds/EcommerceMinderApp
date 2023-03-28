@@ -14,6 +14,9 @@ import {
 } from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Colors} from './utils/constants/theme';
+import {ampli, Environment} from './ampli';
+import Config from 'react-native-config';
+import {ensureNonNullable} from './utils/ensure-non-nullable';
 
 const fonts = configureFonts({config: {fontFamily: 'Roboto'}});
 
@@ -33,6 +36,12 @@ const CombinedDefaultTheme: NavigationTheme & Partial<MD2Theme | MD3Theme> = {
 };
 
 function App() {
+  ampli.load({
+    environment: ensureNonNullable<Environment>(
+      Config.AMPLI_DEVELOPMENT as Environment,
+    ),
+  });
+
   return (
     <PaperProvider theme={{...NavigationDefaultTheme}}>
       <SafeAreaProvider>

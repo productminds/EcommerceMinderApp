@@ -10,6 +10,7 @@ import ContentCards from '../../components/ContentCards';
 import {ProductsList} from '../../components/ProductsList';
 import {useProducts} from '../../hooks/useProducts';
 import {useProductsContext} from '../../contexts/ProductsManagementContext';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 const HomeScreen = (): JSX.Element => {
   const {
@@ -24,6 +25,7 @@ const HomeScreen = (): JSX.Element => {
   } = useProducts();
   const {filteredProducts, setProducts} = useProductsContext();
   const [search, setSearch] = useState('');
+  const {trackHomeViewed, trackSearchCompleted} = useAmplitude();
 
   const handleLoad = useCallback(() => {
     fetchAllProducts();
@@ -32,7 +34,8 @@ const HomeScreen = (): JSX.Element => {
 
   useEffect(() => {
     handleLoad();
-  }, [handleLoad]);
+    trackHomeViewed();
+  }, [handleLoad, trackHomeViewed]);
 
   useEffect(() => {
     setProducts(products);
@@ -51,7 +54,13 @@ const HomeScreen = (): JSX.Element => {
       onRefresh={handleLoad}
       refreshing={categoriesLoading || productsLoading}>
       <View style={styles.searchContainer}>
-        <SearchBar value={search} onChangeText={setSearch} />
+        <SearchBar
+          value={search}
+          onChangeText={setSearch}
+          onEndEditing={value =>
+            trackSearchCompleted(value, filteredProducts.length)
+          }
+        />
         <IconButton icon="bell" />
       </View>
       <ContentCards
