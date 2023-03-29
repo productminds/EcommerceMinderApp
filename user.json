@@ -1,0 +1,39 @@
+{
+    "additionalUserInfo": 
+    {
+        "isNewUser": false, 
+        "profile": 
+        {
+            "aud": "799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com", 
+            "azp": "799762509157-mhqn9ca460ql82dem37bqfduois6ph79.apps.googleusercontent.com", 
+            "email": "agustina.leon@productminds.io", 
+            "email_verified": true, 
+            "exp": 1679940591, 
+            "family_name": "Leon", 
+            "given_name": "Agustina", 
+            "hd": "productminds.io", 
+            "iat": 1679936991,
+            "iss": "https://accounts.google.com", 
+            "locale": "en", 
+            "name": "Agustina Leon", 
+            "picture": "https://lh3.googleusercontent.com/a/AGNmyxZteASSjzL20lm_GFhFaHmUggZLFTbpKzaIL4YQ=s96-c", 
+            "sub": "100868495965381244397"
+        }, 
+        "providerId": "google.com"
+    }, 
+    "user": 
+    {
+        "displayName": "Agustina Leon", 
+        "email": "agustina.leon@productminds.io", 
+        "emailVerified": true, 
+        "isAnonymous": false, 
+        "metadata": [Object], 
+        "multiFactor": [Object], 
+        "phoneNumber": null, 
+        "photoURL": "https://lh3.googleusercontent.com/a/AGNmyxZteASSjzL20lm_GFhFaHmUggZLFTbpKzaIL4YQ=s96-c", 
+        "providerData": [Array], 
+        "providerId": "firebase", 
+        "tenantId": null, 
+        "uid": "KyVaoPdxHpSjv0GqYR5qpd4nsH43"
+    }
+}
