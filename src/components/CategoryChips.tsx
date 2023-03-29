@@ -100,7 +100,7 @@ const CategoryChips = ({data}: CategoryChipsProps): JSX.Element => {
         data={[defaultCategory, ...data]}
         renderItem={({item}) => (
           <Chip
-            mode="outlined"
+            mode="flat"
             style={styles.chip}
             selected={isAlreadyInFilters(item)}
             onPress={() => manageItemInFilters(item)}>

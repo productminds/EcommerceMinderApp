@@ -1125,6 +1125,11 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
+"@braze/react-native-sdk@^3.0.0":
+  "integrity" "sha512-kn45K6MxBDysj4Mx1G1QdjMJeDHnW4w/cVLK+OhHmHmdkg+ifThaHm24a+aziyiCWlTW4se/ujd/RX9O6KlgmA=="
+  "resolved" "https://registry.npmjs.org/@braze/react-native-sdk/-/react-native-sdk-3.0.0.tgz"
+  "version" "3.0.0"
+
 "@callstack/react-theme-provider@^3.0.8":
   "integrity" "sha512-5U231sYY2sqQOaELX0WBCn+iluV8bFaXIS7em03k4W5Xz0AhGvKlnpLIhDGFP8im/SvNW7/2XoR0BsClhn9t6Q=="
   "resolved" "https://registry.npmjs.org/@callstack/react-theme-provider/-/react-theme-provider-3.0.8.tgz"

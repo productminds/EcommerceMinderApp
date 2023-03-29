@@ -18,6 +18,9 @@ import {ampli, Environment} from './ampli';
 import Config from 'react-native-config';
 import {ensureNonNullable} from './utils/ensure-non-nullable';
 import AuthProvider from './contexts/AuthContext';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
+import useBraze from './hooks/useBraze';
 
 const fonts = configureFonts({config: {fontFamily: 'Roboto'}});
 
@@ -36,23 +39,39 @@ const CombinedDefaultTheme: NavigationTheme & Partial<MD2Theme | MD3Theme> = {
   },
 };
 
+const styles = StyleSheet.create({
+  gestureHandler: {
+    flex: 1,
+  },
+});
+
 function App() {
-  ampli.load({
-    environment: ensureNonNullable<Environment>(
-      Config.AMPLI_DEVELOPMENT as Environment,
-    ),
-  });
+  const {subscribeToPushs} = useBraze();
+
+  if (!ampli.isLoaded) {
+    console.log(Config.AMPLI_DEVELOPMENT);
+
+    ampli.load({
+      environment: ensureNonNullable<Environment>(
+        Config.AMPLI_DEVELOPMENT as Environment,
+      ),
+    });
+  }
+
+  subscribeToPushs();
 
   return (
-    <PaperProvider theme={{...NavigationDefaultTheme}}>
-      <SafeAreaProvider>
-        <AuthProvider>
-          <NavigationContainer theme={CombinedDefaultTheme}>
-            <MainNavigator />
-          </NavigationContainer>
-        </AuthProvider>
-      </SafeAreaProvider>
-    </PaperProvider>
+    <GestureHandlerRootView style={styles.gestureHandler}>
+      <PaperProvider theme={{...NavigationDefaultTheme}}>
+        <SafeAreaProvider>
+          <AuthProvider>
+            <NavigationContainer theme={CombinedDefaultTheme}>
+              <MainNavigator />
+            </NavigationContainer>
+          </AuthProvider>
+        </SafeAreaProvider>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
 

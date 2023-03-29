@@ -25,6 +25,7 @@ const SearchBar = ({
       value={value}
       style={styles.searchBar}
       mode="outlined"
+      placeholder="Search here.."
       right={<TextInput.Icon icon="magnify" />}
       onChangeText={onChangeText}
       onEndEditing={e => onEndEditing(e.nativeEvent.text)}
