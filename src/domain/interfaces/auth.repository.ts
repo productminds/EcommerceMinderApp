@@ -1,8 +1,12 @@
 import {User} from '../models/user';
 
+type OnUserChangedCallback = (user: User | null) => void;
+
 export interface Auth {
-
   /** Sign In user */
-  signin(): Promise<User>;
+  signinWithGoogle(): Promise<User>;
 
+  signin(email: string, password: string): Promise<User>;
+
+  onUserChanged(cb: OnUserChangedCallback): void;
 }

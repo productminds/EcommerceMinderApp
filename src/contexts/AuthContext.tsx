@@ -1,18 +1,16 @@
-import {createContext, useState, useContext, useCallback} from 'react';
+import {createContext, useState, useContext, useEffect} from 'react';
 import {User} from '../domain/models/user';
 import React from 'react';
+import {useAuth} from '../hooks/useAuth';
 
 interface AuthContextProps {
-  user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  user: User | null;
+  loginStatus: 'unknown' | 'logged' | 'unlogged';
 }
 
-const AuthContext = createContext(
-  {} as AuthContextProps,
-);
+const AuthContext = createContext({} as AuthContextProps);
 
-export const useAuthContext = () =>
-  useContext(AuthContext);
+export const useAuthContext = () => useContext(AuthContext);
 
 interface AuthProviderProps {
   children: JSX.Element;
@@ -21,14 +19,24 @@ interface AuthProviderProps {
 export default function AuthProvider({
   children,
 }: AuthProviderProps): JSX.Element {
-  
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User | null>(null);
+  const [loginStatus, setLoginStatus] = useState<
+    'unknown' | 'logged' | 'unlogged'
+  >('unknown');
+  const {onUserChanged} = useAuth();
+
+  useEffect(() => {
+    onUserChanged(userChanged => {
+      setLoginStatus(userChanged ? 'logged' : 'unlogged');
+      setUser(userChanged);
+    });
+  }, [onUserChanged]);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        setUser
+        loginStatus,
       }}>
       {children}
     </AuthContext.Provider>

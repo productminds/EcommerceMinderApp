@@ -1,29 +1,37 @@
 import {useCallback, useMemo, useState} from 'react';
-import { User } from '../domain/models/user';
-import { GoogleService } from '../services/firebase.google.service';
+import {User} from '../domain/models/user';
+import {GoogleService} from '../services/firebase.google.service';
 
 export const useAuth = () => {
-  const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(false);
 
-  const google_service = new GoogleService();
+  const googleService = useMemo(() => new GoogleService(), []);
 
   const googleSignIn = useCallback(async (): Promise<User> => {
-
     setLoading(true);
 
-    const result = await google_service.signin().finally(() => setLoading(false));
+    const result = await googleService
+      .signinWithGoogle()
+      .catch(err => {
+        console.log(err);
 
-    setUser(result);
+        throw err;
+      })
+      .finally(() => setLoading(false));
 
     return result;
+  }, [googleService]);
 
-  }, [google_service]);
-
+  const onUserChanged = useCallback(
+    (cb: (user: User | null) => void) => {
+      googleService.onUserChanged(cb);
+    },
+    [googleService],
+  );
 
   return {
-    user,
     loading,
     googleSignIn,
+    onUserChanged,
   };
 };

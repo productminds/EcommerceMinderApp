@@ -17,6 +17,7 @@ import {Colors} from './utils/constants/theme';
 import {ampli, Environment} from './ampli';
 import Config from 'react-native-config';
 import {ensureNonNullable} from './utils/ensure-non-nullable';
+import AuthProvider from './contexts/AuthContext';
 
 const fonts = configureFonts({config: {fontFamily: 'Roboto'}});
 
@@ -45,9 +46,11 @@ function App() {
   return (
     <PaperProvider theme={{...NavigationDefaultTheme}}>
       <SafeAreaProvider>
-        <NavigationContainer theme={CombinedDefaultTheme}>
-          <MainNavigator />
-        </NavigationContainer>
+        <AuthProvider>
+          <NavigationContainer theme={CombinedDefaultTheme}>
+            <MainNavigator />
+          </NavigationContainer>
+        </AuthProvider>
       </SafeAreaProvider>
     </PaperProvider>
   );

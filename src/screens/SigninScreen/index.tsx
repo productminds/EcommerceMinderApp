@@ -2,18 +2,19 @@ import React, {useEffect} from 'react';
 import {Text, View, Image} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import Config from 'react-native-config';
+// import Config from 'react-native-config';
 import styles from './styles';
 import {Colors} from '../../utils/constants/theme';
 import {MainNavigatorStackParamList} from '../../navigators/MainNavigator';
 import DefaultScreenLayout from '../../components/DefaultScreenLayout';
 
-import {useAuthContext} from '../../contexts/AuthContext';
-import {useAuth} from '../../hooks/useAuth';
+// import {useAuthContext} from '../../contexts/AuthContext';
+// import {useAuth} from '../../hooks/useAuth';
 
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useAuth} from '../../hooks/useAuth';
 
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+// import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
 type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
 
@@ -21,37 +22,13 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
 
-  const {loading: userLoading, googleSignIn: googleSignIn} = useAuth();
+  const {googleSignIn} = useAuth();
 
-  const {setUser} = useAuthContext();
+  // const {setUser} = useAuthContext();
 
-  const handleSignIn = async () => {
-    console.log('Sign in');
-  };
-
-  const handleGoogleSignIn = async () => {
-    console.log('Google sign in');
-
-    // console.log(userLoading);
-    // await googleSignIn().then((user) => {
-    //   setUser(user)
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
-
-    const {idToken} = await GoogleSignin.signIn();
-
-    console.log(idToken);
-
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    console.log(googleCredential);
-
-    const userSignIn = auth().signInWithCredential(googleCredential);
-
-    // console.log(userLoading);
-  };
-
+  // const handleSignIn = async () => {
+  //   console.log('Sign in');
+  // };
   const handleSwitchToSignUp = () => {
     navigation.navigate('Signup');
   };
@@ -106,7 +83,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
         <View style={styles.buttonContainer}>
           <Button
             textColor={Colors.white}
-            onPress={handleSignIn}
+            onPress={googleSignIn}
             style={styles.signInButton}
             mode="contained">
             Sign in
@@ -116,7 +93,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
           <Text>Or continue with</Text>
           <TouchableRipple
             style={styles.googleContainer}
-            onPress={handleGoogleSignIn}>
+            onPress={googleSignIn}>
             <Image
               source={require('../../utils/assets/icons/google.png')}
               style={styles.googleLogo}
