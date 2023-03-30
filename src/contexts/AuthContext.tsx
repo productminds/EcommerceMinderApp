@@ -27,7 +27,12 @@ export default function AuthProvider({
 
   useEffect(() => {
     onUserChanged(userChanged => {
+      console.log("User changed? -> ", userChanged);
+      if (userChanged) {
+        console.log("Logged")
+      }
       setLoginStatus(userChanged ? 'logged' : 'unlogged');
+      console.log("Login status", loginStatus);
       setUser(userChanged);
     });
   }, [onUserChanged]);

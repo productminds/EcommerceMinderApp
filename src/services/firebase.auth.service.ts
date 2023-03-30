@@ -6,7 +6,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {BadParametersException} from '../utils/exceptions/bad-parameters.exception';
 import Config from 'react-native-config';
 
-export class GoogleService implements Auth {
+export class AuthService implements Auth {
   private readonly webClientId: string;
 
   constructor() {
@@ -16,14 +16,13 @@ export class GoogleService implements Auth {
     });
   }
 
-  signin(_email: string, _password: string): Promise<User> {
-    throw new Error('Method not implemented.');
-  }
-
-  onUserChanged(cb: (user: User | null) => void): void {
-    auth().onUserChanged(user => {
-      cb(user ? makeUser(user) : null);
-    });
+  async signin(email: string, password: string): Promise<User> {
+    try {
+      const userSignIn = await auth().signInWithEmailAndPassword(email, password);
+      return makeUser(userSignIn.user);
+    } catch(err) {
+      throw makeError(err)
+    }
   }
 
   async signinWithGoogle(): Promise<User> {
@@ -35,6 +34,30 @@ export class GoogleService implements Auth {
       return makeUser(userSignIn.user);
     } catch (err) {
       throw makeError(err);
+    }
+  }
+
+  async signup(email: string, password: string): Promise<User> {
+    try {
+      const userSignUp = await auth().createUserWithEmailAndPassword(email, password);
+      return makeUser(userSignUp.user);
+    } catch(err) {
+      throw makeError(err)
+    }
+    
+  }
+
+  onUserChanged(cb: (user: User | null) => void): void {
+    auth().onUserChanged(user => {
+      cb(user ? makeUser(user) : null);
+    });
+  }
+
+  async signout() {
+    try {
+      await auth().signOut();
+    } catch(err) {
+      throw makeError(err)
     }
   }
 }
