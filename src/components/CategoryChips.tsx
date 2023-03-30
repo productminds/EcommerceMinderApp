@@ -12,7 +12,7 @@ interface CategoryChipsProps {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: Sizes.margin3,
+    marginVertical: Sizes.margin3,
   },
 
   separator: {
@@ -20,9 +20,17 @@ const styles = StyleSheet.create({
   },
 
   chip: {
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.lightGray,
     borderColor: Colors.black,
     color: Colors.darkgray,
+  },
+
+  chipSelectedText: {
+    color: Colors.black,
+  },
+
+  chipSelected: {
+    backgroundColor: Colors.gray,
   },
 });
 
@@ -100,8 +108,12 @@ const CategoryChips = ({data}: CategoryChipsProps): JSX.Element => {
         data={[defaultCategory, ...data]}
         renderItem={({item}) => (
           <Chip
-            mode="outlined"
-            style={styles.chip}
+            mode="flat"
+            style={[
+              styles.chip,
+              isAlreadyInFilters(item) && styles.chipSelected,
+            ]}
+            textStyle={isAlreadyInFilters(item) && styles.chipSelectedText}
             selected={isAlreadyInFilters(item)}
             onPress={() => manageItemInFilters(item)}>
             {item.name}

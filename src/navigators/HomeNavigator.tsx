@@ -10,7 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Badge} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
-type HomeNavigatorTabParamList = {
+export type HomeNavigatorTabParamList = {
   Home: undefined;
   Profile: undefined;
   Cart: undefined;
@@ -42,7 +42,9 @@ const HomeNavigator = (): JSX.Element => {
   return (
     <ProductsManagementProvider>
       <CartProvider>
-        <BottomTab.Navigator activeColor={Colors.primary}>
+        <BottomTab.Navigator
+          activeColor={Colors.primary}
+          initialRouteName="Home">
           <BottomTab.Screen
             name="Home"
             component={HomeScreen}

@@ -10,10 +10,10 @@ export class Cart {
 
   /** Calculate the total of cart as computed property */
   get total(): number {
-    return Object.values(this.items).reduce((acc, obj) => {
-      console.log('obj', obj.itemsTotal);
-      return (acc += obj.itemsTotal);
-    }, 0);
+    return Object.values(this.items).reduce(
+      (acc, obj) => (acc += obj.itemsTotal),
+      0,
+    );
   }
 
   addProduct(product: Product, quantity: number = 1) {

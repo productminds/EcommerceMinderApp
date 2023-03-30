@@ -28,8 +28,6 @@ export const useAuth = () => {
     const result = await authService
       .signinWithGoogle()
       .catch(err => {
-        console.log(err);
-
         throw err;
       })
       .finally(() => setLoading(false));
@@ -77,6 +75,7 @@ export const useAuth = () => {
     loading,
     signIn,
     googleSignIn,
+    signOut,
     onUserChanged,
     signUp,
     signOut

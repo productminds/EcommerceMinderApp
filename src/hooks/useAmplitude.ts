@@ -2,8 +2,16 @@ import {useCallback} from 'react';
 import {ampli} from '../ampli';
 import {Cart} from '../domain/models/cart';
 import {Product} from '../domain/models/product';
+import {User} from '../domain/models/user';
 
 export const useAmplitude = () => {
+  const setAmplitudeUser = (
+    user: User,
+    accountType: 'Google' | 'Email/Password',
+  ) => {
+    ampli.identify(user.id, {'Account Type': accountType});
+  };
+
   const trackProductAddedToCart = useCallback(
     (product: Product, quantity: number) => {
       ampli.productAdded({
@@ -69,10 +77,12 @@ export const useAmplitude = () => {
   );
 
   const trackHomeViewed = useCallback(() => {
+    console.log('Logged');
     ampli.homeViewed();
   }, []);
 
   return {
+    setAmplitudeUser,
     trackCartViewed,
     trackProductAddedToCart,
     trackProductRemovedToCart,
