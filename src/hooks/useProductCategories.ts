@@ -1,6 +1,6 @@
 import {useCallback, useState, useMemo} from 'react';
-import {ProductCategory} from '../domain/models/product-category';
 
+import {ProductCategory} from '../domain/models/product-category';
 import CategoryService from '../services/mock-api-category.service';
 
 export const useProductCategories = () => {

@@ -5,7 +5,7 @@ export class Product {
   readonly id: string;
   readonly name: string;
   readonly description?: string;
-  readonly imageUri: string;
+  readonly imageUri?: string;
   readonly price: number;
   readonly category: Ref<ProductCategory>;
 

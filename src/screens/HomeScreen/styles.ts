@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-// import {Sizes} from '../../utils/constants/theme';
 
 export default StyleSheet.create({
   searchContainer: {

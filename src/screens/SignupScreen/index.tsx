@@ -1,66 +1,74 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, Text, View, Image} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
+
 import styles from './styles';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Colors} from '../../utils/constants/theme';
 import {MainNavigatorStackParamList} from '../../navigators/MainNavigator';
 
+import {useAuth} from '../../hooks/useAuth';
+import useBraze from '../../hooks/useBraze';
+import {useAmplitude} from '../../hooks/useAmplitude';
+
 type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signup'>;
 
 const SignupScreen = ({navigation}: Props): JSX.Element => {
+  const [firstName, setFirstName] = React.useState<string>('');
+  const [lastName, setLastName] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
 
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const {signUp} = useAuth();
+  const {setBrazeUser} = useBraze();
+  const {setAmplitudeUser, trackAccountCreated} = useAmplitude();
 
-  const handleSignUp = () => {
-    console.log("Sign up");
-  }
-
-  const handleGoogleSignUp = () => {
-    console.log("Google sign up");
-  }
+  const handleSignUp = async () => {
+    const user = await signUp(email, password);
+    setBrazeUser(user);
+    setAmplitudeUser(user, 'Email/Password');
+    trackAccountCreated('Email/Password');
+    navigation.navigate('HomeNavigator', {screen: 'Home'});
+  };
 
   const handlewitchToSignIn = () => {
-    navigation.navigate("Signin");
-  }
+    navigation.navigate('Signin');
+  };
 
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
         <View style={styles.subcontainer}>
-          <View style={styles.logo}></View>
+          <View style={styles.logo} />
           <Text style={styles.title}>Welcome</Text>
         </View>
-        <View  style={styles.subcontainer}>
+        <View style={styles.subcontainer}>
           <TextInput
-              mode="outlined"
-              label="First Name"
-              value={firstName}
-              onChangeText={(firstName) => setFirstName(firstName)}
-              style={styles.input}
-              textAlignVertical = "center"
-              outlineStyle={styles.borderInput}
-              selectionColor={Colors.primary}
-              activeOutlineColor={Colors.primary}
+            mode="outlined"
+            label="First Name"
+            value={firstName}
+            onChangeText={name => setFirstName(name)}
+            style={styles.input}
+            textAlignVertical="center"
+            outlineStyle={styles.borderInput}
+            selectionColor={Colors.primary}
+            activeOutlineColor={Colors.primary}
           />
           <TextInput
-              mode="outlined"
-              label="Last Name"
-              value={lastName}
-              onChangeText={(lastName) => setLastName(lastName)}
-              style={styles.input}
-              outlineStyle={styles.borderInput}
-              selectionColor={Colors.primary}
-              activeOutlineColor={Colors.primary}
+            mode="outlined"
+            label="Last Name"
+            value={lastName}
+            onChangeText={name => setLastName(name)}
+            style={styles.input}
+            outlineStyle={styles.borderInput}
+            selectionColor={Colors.primary}
+            activeOutlineColor={Colors.primary}
           />
           <TextInput
             mode="outlined"
             label="Email"
             value={email}
-            onChangeText={(email) => setEmail(email)}
+            onChangeText={e => setEmail(e)}
             style={styles.input}
             outlineStyle={styles.borderInput}
             selectionColor={Colors.primary}
@@ -70,40 +78,36 @@ const SignupScreen = ({navigation}: Props): JSX.Element => {
             mode="outlined"
             label="Password"
             value={password}
-            onChangeText={(password) => setPassword(password)}
+            onChangeText={p => setPassword(p)}
             secureTextEntry
-            right={<TextInput.Icon icon="eye" iconColor={Colors.primary}/>}
+            right={<TextInput.Icon icon="eye" iconColor={Colors.primary} />}
             style={styles.input}
             outlineStyle={styles.borderInput}
             activeOutlineColor={Colors.primary}
             selectionColor={Colors.primary}
           />
         </View>
-        <View  style={styles.subcontainer}>
-            <View style={styles.buttonContainer}>
-                <Button style={styles.signUpButton} textColor={Colors.white} onPress={handleSignUp}>
-                    Sign Up
-                </Button>
-            </View>
-          <View style={styles.subcontainer}>
-            <Text style={styles.text}>Or continue with</Text>
-            <TouchableRipple style={styles.googleContainer} onPress={handleGoogleSignUp}>
-              <Image source={require('../../utils/assets/icons/google.png')} style={styles.googleLogo}/>
-            </TouchableRipple>
+        <View style={styles.subcontainer}>
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={handleSignUp}
+              style={styles.signUpButton}
+              textColor={Colors.white}>
+              Sign Up
+            </Button>
           </View>
         </View>
         <View style={styles.subcontainer}>
           <View style={styles.subcontainerHorizontal}>
-              <Text style={styles.text}>Already have an account?</Text>
-              <TouchableRipple onPress={handlewitchToSignIn}>
-                <Text style={styles.primaryColorText}>Sign in here</Text>
-              </TouchableRipple>
+            <Text style={styles.text}>Already have an account?</Text>
+            <TouchableRipple onPress={handlewitchToSignIn}>
+              <Text style={styles.primaryColorText}>Sign in here</Text>
+            </TouchableRipple>
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
 
 export default SignupScreen;
