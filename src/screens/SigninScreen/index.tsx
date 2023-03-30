@@ -1,34 +1,25 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Text, View, Image} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-// import Config from 'react-native-config';
 import styles from './styles';
 import {Colors} from '../../utils/constants/theme';
 import {MainNavigatorStackParamList} from '../../navigators/MainNavigator';
 import DefaultScreenLayout from '../../components/DefaultScreenLayout';
 
-// import {useAuthContext} from '../../contexts/AuthContext';
-// import {useAuth} from '../../hooks/useAuth';
-
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useAuth} from '../../hooks/useAuth';
-
-// import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import useBraze from '../../hooks/useBraze';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
 
 const SigninScreen = ({navigation}: Props): JSX.Element => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
-
+  const {setBrazeUser} = useBraze();
+  const {setAmplitudeUser} = useAmplitude();
   const {googleSignIn} = useAuth();
 
-  // const {setUser} = useAuthContext();
-
-  // const handleSignIn = async () => {
-  //   console.log('Sign in');
-  // };
   const handleSwitchToSignUp = () => {
     navigation.navigate('Signup');
   };
@@ -37,12 +28,12 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
     console.log('Forgot Password');
   };
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '799762509157-c8t42andcmlpen4jfv5v96atussdvg37.apps.googleusercontent.com',
-    });
-  }, []);
+  const handleGoogleSignIn = async () => {
+    const user = await googleSignIn();
+    setBrazeUser(user);
+    setAmplitudeUser(user, 'Google');
+    navigation.navigate('HomeNavigator', {});
+  };
 
   return (
     <DefaultScreenLayout>
@@ -83,7 +74,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
         <View style={styles.buttonContainer}>
           <Button
             textColor={Colors.white}
-            onPress={googleSignIn}
+            onPress={() => {}}
             style={styles.signInButton}
             mode="contained">
             Sign in
@@ -93,7 +84,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
           <Text>Or continue with</Text>
           <TouchableRipple
             style={styles.googleContainer}
-            onPress={googleSignIn}>
+            onPress={handleGoogleSignIn}>
             <Image
               source={require('../../utils/assets/icons/google.png')}
               style={styles.googleLogo}

@@ -20,6 +20,10 @@ export class GoogleService implements Auth {
     throw new Error('Method not implemented.');
   }
 
+  signout() {
+    auth().signOut();
+  }
+
   onUserChanged(cb: (user: User | null) => void): void {
     auth().onUserChanged(user => {
       cb(user ? makeUser(user) : null);

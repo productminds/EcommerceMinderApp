@@ -8,5 +8,7 @@ export interface Auth {
 
   signin(email: string, password: string): Promise<User>;
 
+  signout(): void;
+
   onUserChanged(cb: OnUserChangedCallback): void;
 }

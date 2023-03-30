@@ -1,8 +1,32 @@
 import {Text} from 'react-native-paper';
 import {ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useAuth} from '../hooks/useAuth';
+import {HomeNavigatorTabParamList} from '../navigators/HomeNavigator';
+import {MaterialBottomTabScreenProps} from '@react-navigation/material-bottom-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {MainNavigatorStackParamList} from '../navigators/MainNavigator';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-const ProfileScreen = (): JSX.Element => {
+type Props = CompositeScreenProps<
+  MaterialBottomTabScreenProps<HomeNavigatorTabParamList, 'Profile'>,
+  NativeStackScreenProps<MainNavigatorStackParamList>
+>;
+
+const ProfileScreen = ({navigation}: Props): JSX.Element => {
+  const {signOut} = useAuth();
+
+  useEffect(() => {
+    const logout = () => {
+      signOut();
+      navigation.navigate('Signin');
+    };
+
+    console.log('Signout..');
+
+    logout();
+  }, [signOut, navigation]);
+
   return (
     <ScrollView>
       <Text>Oi</Text>

@@ -11,7 +11,7 @@ interface ContentCardsProps {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: Sizes.margin3,
+    marginTop: Sizes.margin3,
   },
 
   carousel: {
@@ -20,17 +20,19 @@ const styles = StyleSheet.create({
 });
 
 export const ContentCards = ({data}: ContentCardsProps): JSX.Element => {
-  return (
+  return data.length > 0 ? (
     <View style={styles.container}>
       <Carousel
         data={data}
-        height={140}
+        height={180}
         style={styles.carousel}
         loop={false}
         width={Sizes.width * 0.75}
         renderItem={({item}) => <ContentCardComponent {...item} />}
       />
     </View>
+  ) : (
+    <></>
   );
 };
 

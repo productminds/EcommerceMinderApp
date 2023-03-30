@@ -8,7 +8,7 @@
  * To update run 'ampli pull mobile-app'
  *
  * Required dependencies: @amplitude/analytics-react-native@^0.4.0, @react-native-async-storage/async-storage@^1.17.9
- * Tracking Plan Version: 3
+ * Tracking Plan Version: 4
  * Build: 1.0.0
  * Runtime: react-native:typescript-ampli-v2
  *
@@ -38,10 +38,10 @@ export const ApiKey: Record<Environment, string> = {
  */
 export const DefaultConfiguration: ReactNativeOptions = {
   plan: {
-    version: '3',
+    version: '4',
     branch: 'main',
     source: 'mobile-app',
-    versionId: '9168a7db-baf0-4a54-b64f-8496ff215503'
+    versionId: 'aa2b95a6-8d28-4356-b440-f7aa5d5ed539'
   },
   ...{
     ingestionMetadata: {
@@ -58,6 +58,15 @@ export type LoadOptionsWithApiKey = LoadOptionsBase & { client: { apiKey: string
 export type LoadOptionsWithClientInstance = LoadOptionsBase & { client: { instance: ReactNativeClient; } };
 
 export type LoadOptions = LoadOptionsWithEnvironment | LoadOptionsWithApiKey | LoadOptionsWithClientInstance;
+
+export interface IdentifyProperties {
+  /**
+   * | Rule | Value |
+   * |---|---|
+   * | Enum Values | Google, Email/Password |
+   */
+  "Account Type"?: "Google" | "Email/Password";
+}
 
 export interface AccountCreatedProperties {
   "Account Creation Date": string;
@@ -165,6 +174,16 @@ export interface SearchResultClickedProperties {
   Price: number;
   "Product ID": string;
   "Product Name": string;
+}
+
+export class Identify implements BaseEvent {
+  event_type = 'Identify';
+
+  constructor(
+    public event_properties?: IdentifyProperties,
+  ) {
+    this.event_properties = event_properties;
+  }
 }
 
 export class AccountCreated implements BaseEvent {
@@ -303,10 +322,12 @@ export class Ampli {
    * Identify a user and set user properties.
    *
    * @param userId The user's id.
+   * @param properties The user properties.
    * @param options Optional event options.
    */
   identify(
     userId: string | undefined,
+    properties?: IdentifyProperties,
     options?: EventOptions,
   ): PromiseResult<Result> {
     if (!this.isInitializedAndEnabled()) {
@@ -318,6 +339,12 @@ export class Ampli {
     }
 
     const amplitudeIdentify = new amplitude.Identify();
+    const eventProperties = properties;
+    if (eventProperties != null) {
+      for (const [key, value] of Object.entries(eventProperties)) {
+        amplitudeIdentify.set(key, value);
+      }
+    }
 
     return this.amplitude!.identify(amplitudeIdentify, options);
   }

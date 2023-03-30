@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
   input: {
     width: '80%',
-    fontSize: 12,
+    fontSize: Sizes.font,
   },
   borderInput: {
     borderColor: Colors.primary,
@@ -26,10 +26,10 @@ export default StyleSheet.create({
   primaryColorText: {
     color: Colors.primary,
     fontWeight: 'bold',
-    fontSize: 12
+    fontSize: Sizes.font,
   },
   text: {
-    fontSize: 12
+    fontSize: Sizes.font,
   },
   forgotPassword: {
     width: '80%',
@@ -39,6 +39,7 @@ export default StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     marginBottom: Sizes.margin,
+    fontSize: Sizes.h3,
     backgroundColor: Colors.primary,
   },
   buttonContainer: {
@@ -66,7 +67,7 @@ export default StyleSheet.create({
     width: '100%',
   },
   subcontainerAuthButtons: {
-    marginTop: 70
+    marginTop: 70,
   },
   subcontainerHorizontal: {
     width: '100%',

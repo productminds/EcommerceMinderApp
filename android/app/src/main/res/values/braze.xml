@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="com_braze_api_key">037ed5f4-e11a-4659-aadd-29f6a3dcac95</string>
+  <string translatable="false" name="com_braze_custom_endpoint">sdk.iad-06.braze.com</string>
+  <bool translatable="false" name="com_braze_firebase_cloud_messaging_registration_enabled">true</bool>
+  <string translatable="false" name="com_braze_firebase_cloud_messaging_sender_id">799762509157</string>
+
+  <integer name="com_braze_trigger_action_minimum_time_interval_seconds">1</integer>
+
+  <bool name="com_braze_handle_push_deep_links_automatically">true</bool>
+</resources>

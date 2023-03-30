@@ -13,13 +13,15 @@ export const useAuth = () => {
     const result = await googleService
       .signinWithGoogle()
       .catch(err => {
-        console.log(err);
-
         throw err;
       })
       .finally(() => setLoading(false));
 
     return result;
+  }, [googleService]);
+
+  const signOut = useCallback(() => {
+    googleService.signout();
   }, [googleService]);
 
   const onUserChanged = useCallback(
@@ -32,6 +34,7 @@ export const useAuth = () => {
   return {
     loading,
     googleSignIn,
+    signOut,
     onUserChanged,
   };
 };
