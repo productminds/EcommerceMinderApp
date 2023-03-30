@@ -1,18 +1,20 @@
 import {IconButton} from 'react-native-paper';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {View} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+
 import SearchBar from '../../components/SearchBar';
 import DefaultScreenLayout from '../../components/DefaultScreenLayout';
 import styles from './styles';
 import CategoryChips from '../../components/CategoryChips';
-import {useProductCategories} from '../../hooks/useProductCategories';
 import ContentCards from '../../components/ContentCards';
 import {ProductsList} from '../../components/ProductsList';
-import {useProducts} from '../../hooks/useProducts';
 import {useProductsContext} from '../../contexts/ProductsManagementContext';
-import {useAmplitude} from '../../hooks/useAmplitude';
-import {useIsFocused} from '@react-navigation/native';
 import {Colors} from '../../utils/constants/theme';
+
+import {useProductCategories} from '../../hooks/useProductCategories';
+import {useProducts} from '../../hooks/useProducts';
+import {useAmplitude} from '../../hooks/useAmplitude';
 import useBraze from '../../hooks/useBraze';
 
 const HomeScreen = (): JSX.Element => {

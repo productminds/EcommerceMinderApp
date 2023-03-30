@@ -1,14 +1,17 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import {Colors} from '../utils/constants/theme';
-import ProductsManagementProvider from '../contexts/ProductsManagementContext';
-import CartScreen from '../screens/CartScreen';
-import CartProvider, {useCartContext} from '../contexts/CartContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Badge} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+
+import HomeScreen from '../screens/HomeScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import CartScreen from '../screens/CartScreen';
+
+import {Colors} from '../utils/constants/theme';
+import ProductsManagementProvider from '../contexts/ProductsManagementContext';
+import CartProvider, {useCartContext} from '../contexts/CartContext';
+
 
 export type HomeNavigatorTabParamList = {
   Home: undefined;

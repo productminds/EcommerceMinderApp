@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
+
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import styles from './styles';
 import {Colors} from '../../utils/constants/theme';

@@ -1,5 +1,6 @@
 import Braze from '@braze/react-native-sdk';
 import {useCallback, useState} from 'react';
+
 import ContentCard from '../domain/models/content-card';
 import {Product} from '../domain/models/product';
 import {User} from '../domain/models/user';

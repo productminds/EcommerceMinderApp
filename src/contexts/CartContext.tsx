@@ -1,8 +1,10 @@
 import {createContext, useCallback, useContext, useMemo, useState} from 'react';
-import {Cart} from '../domain/models/cart';
 import React from 'react';
+
 import {Product} from '../domain/models/product';
 import {CartItem} from '../domain/models/cart-item';
+import {Cart} from '../domain/models/cart';
+
 import {useAmplitude} from '../hooks/useAmplitude';
 import useBraze from '../hooks/useBraze';
 

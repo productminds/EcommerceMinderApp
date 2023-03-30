@@ -1,10 +1,11 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import Config from 'react-native-config';
+
 import {Auth} from '../domain/interfaces/auth.repository';
 import {User} from '../domain/models/user';
 import {ensureNonNullable} from '../utils/ensure-non-nullable';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {BadParametersException} from '../utils/exceptions/bad-parameters.exception';
-import Config from 'react-native-config';
 
 export class AuthService implements Auth {
   private readonly webClientId: string;
