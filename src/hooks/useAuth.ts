@@ -78,6 +78,5 @@ export const useAuth = () => {
     signOut,
     onUserChanged,
     signUp,
-    signOut
   };
 };

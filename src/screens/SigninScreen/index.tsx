@@ -29,11 +29,18 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
     console.log('Forgot Password');
   };
 
+  const handleSignIn = async () => {
+    const user = await signIn(email, password);
+    setBrazeUser(user);
+    setAmplitudeUser(user, 'Email/Password');
+    navigation.navigate("HomeNavigator",{});
+  }
+
   const handleGoogleSignIn = async () => {
     const user = await googleSignIn();
     setBrazeUser(user);
     setAmplitudeUser(user, 'Google');
-    navigation.navigate('HomeNavigator', {});
+    navigation.navigate("HomeNavigator",{});
   };
 
   return (
@@ -75,7 +82,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
         <View style={styles.buttonContainer}>
           <Button
             textColor={Colors.white}
-            onPress={() => signIn(email, password)}
+            onPress={handleSignIn}
             style={styles.signInButton}
             mode="contained">
             Sign in

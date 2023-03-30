@@ -28,13 +28,6 @@ const ProfileScreen = ({navigation}: Props): JSX.Element => {
   return (
     <ScrollView>
       <Text>Oi</Text>
-      <Button
-            // textColor={Colors.white}
-            onPress={signOut}
-            // style={styles.signInButton}
-            mode="contained">
-            Sign out
-          </Button>
     </ScrollView>
   );
 };
