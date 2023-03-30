@@ -1,5 +1,7 @@
 import Braze from '@braze/react-native-sdk';
 import {useCallback, useState} from 'react';
+import {Cart} from '../domain/models/cart';
+
 import ContentCard from '../domain/models/content-card';
 import {Product} from '../domain/models/product';
 import {User} from '../domain/models/user';
@@ -27,21 +29,26 @@ const useBraze = () => {
   }, []);
 
   const fetchContentCards = useCallback(async () => {
-    const result = await Braze.getContentCards();
+    try {
+      const result = await Braze.getContentCards();
 
-    console.log(result.length);
-
-    setContentCards(
-      result
-        .filter(c => ['Captioned', 'Classic', 'Banner'].includes(c.type))
-        .map(makeContentCard),
-    );
+      setContentCards(
+        result
+          .filter(c => ['Captioned', 'Classic', 'Banner'].includes(c.type))
+          .map(makeContentCard),
+      );
+    } catch (err) {
+      throw new InternalException('Could not fetch content cards', err);
+    }
   }, []);
 
   const subscribeToContentCards = useCallback(() => {
     Braze.addListener(Braze.Events.CONTENT_CARDS_UPDATED, () => {
-      console.log('Updated content cards');
-      fetchContentCards();
+      try {
+        fetchContentCards();
+      } catch (err) {
+        console.error(err);
+      }
     });
   }, [fetchContentCards]);
 
@@ -53,6 +60,16 @@ const useBraze = () => {
     console.log('Logged');
   }, []);
 
+  const logCartViewed = useCallback((cart: Cart) => {
+    Braze.logCustomEvent('Cart Viewed', {
+      'Cart Total': cart.total,
+    });
+  }, []);
+
+  const requestForUpdateContentCards = useCallback(() => {
+    Braze.requestContentCardsRefresh();
+  }, []);
+
   const init = useCallback(() => {
     subscribeToPushs();
     subscribeToContentCards();
@@ -61,10 +78,12 @@ const useBraze = () => {
   return {
     contentCards,
 
+    requestForUpdateContentCards,
     setBrazeUser,
     subscribeToPushs,
     fetchContentCards,
     logProductAdded,
+    logCartViewed,
     init,
   };
 };

@@ -1,4 +1,5 @@
 import {useCallback} from 'react';
+
 import {ampli} from '../ampli';
 import {Cart} from '../domain/models/cart';
 import {Product} from '../domain/models/product';
@@ -77,7 +78,6 @@ export const useAmplitude = () => {
   );
 
   const trackHomeViewed = useCallback(() => {
-    console.log('Logged');
     ampli.homeViewed();
   }, []);
 

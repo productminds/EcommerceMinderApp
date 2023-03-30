@@ -71,7 +71,6 @@ export default StyleSheet.create({
   },
   subcontainerHorizontal: {
     width: '100%',
-    // margin: SIZES.margin,
     flexDirection: 'row',
     backgroundColor: Colors.white,
     justifyContent: 'space-evenly',

@@ -1,12 +1,14 @@
 import {Text} from 'react-native-paper';
 import {ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
-import {useAuth} from '../hooks/useAuth';
+
 import {HomeNavigatorTabParamList} from '../navigators/HomeNavigator';
 import {MaterialBottomTabScreenProps} from '@react-navigation/material-bottom-tabs';
-import {CompositeScreenProps} from '@react-navigation/native';
+import {CompositeScreenProps, useIsFocused} from '@react-navigation/native';
 import {MainNavigatorStackParamList} from '../navigators/MainNavigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
+import {useAuth} from '../hooks/useAuth';
 
 type Props = CompositeScreenProps<
   MaterialBottomTabScreenProps<HomeNavigatorTabParamList, 'Profile'>,
@@ -15,6 +17,7 @@ type Props = CompositeScreenProps<
 
 const ProfileScreen = ({navigation}: Props): JSX.Element => {
   const {signOut} = useAuth();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const logout = () => {
@@ -22,10 +25,10 @@ const ProfileScreen = ({navigation}: Props): JSX.Element => {
       navigation.navigate('Signin');
     };
 
-    console.log('Signout..');
-
-    logout();
-  }, [signOut, navigation]);
+    if (isFocused) {
+      logout();
+    }
+  }, [signOut, navigation, isFocused]);
 
   return (
     <ScrollView>

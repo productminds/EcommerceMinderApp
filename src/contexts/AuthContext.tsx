@@ -1,6 +1,8 @@
 import {createContext, useState, useContext, useEffect} from 'react';
+
 import {User} from '../domain/models/user';
 import React from 'react';
+
 import {useAuth} from '../hooks/useAuth';
 
 interface AuthContextProps {

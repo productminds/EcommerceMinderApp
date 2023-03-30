@@ -1,8 +1,9 @@
 import React, {memo} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Button, Card, IconButton, Text} from 'react-native-paper';
 import {useCartContext} from '../contexts/CartContext';
 import {Product} from '../domain/models/product';
+import {useAmplitude} from '../hooks/useAmplitude';
 import {Colors, Sizes} from '../utils/constants/theme';
 
 const styles = StyleSheet.create({
@@ -34,6 +35,12 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  image: {
+    flex: 1,
   },
 
   button: {
@@ -55,6 +62,7 @@ const styles = StyleSheet.create({
 export const ProductCard = memo((product: Product): JSX.Element => {
   const {addProductItem, removeAllProductItems, checkIfIsOnCart} =
     useCartContext();
+  const {trackProductFavorited} = useAmplitude();
 
   const {imageUri, name, description, price} = product;
 
@@ -70,7 +78,7 @@ export const ProductCard = memo((product: Product): JSX.Element => {
         <Text>${price}</Text>
       </View>
       <View style={styles.body}>
-        <Image source={{uri: imageUri}} />
+        <Card.Cover style={styles.image} source={{uri: imageUri}} />
       </View>
       <View style={styles.action}>
         {checkIfIsOnCart(product) ? (
@@ -88,7 +96,11 @@ export const ProductCard = memo((product: Product): JSX.Element => {
             Add to cart
           </Button>
         )}
-        <IconButton icon="heart" iconColor={Colors.secondary} />
+        <IconButton
+          icon="heart"
+          iconColor={Colors.secondary}
+          onPress={() => trackProductFavorited(product)}
+        />
       </View>
     </Card>
   );

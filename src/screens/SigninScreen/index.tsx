@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import {TextInput, Button, TouchableRipple} from 'react-native-paper';
+
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import styles from './styles';
 import {Colors} from '../../utils/constants/theme';
@@ -16,9 +17,10 @@ type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
 const SigninScreen = ({navigation}: Props): JSX.Element => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
+
   const {setBrazeUser} = useBraze();
   const {setAmplitudeUser} = useAmplitude();
-  const {googleSignIn} = useAuth();
+  const {googleSignIn, signIn} = useAuth();
 
   const handleSwitchToSignUp = () => {
     navigation.navigate('Signup');
@@ -28,11 +30,18 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
     console.log('Forgot Password');
   };
 
+  const handleSignIn = async () => {
+    const user = await signIn(email, password);
+    setBrazeUser(user);
+    setAmplitudeUser(user, 'Email/Password');
+    navigation.navigate('HomeNavigator', {screen: 'Home'});
+  };
+
   const handleGoogleSignIn = async () => {
     const user = await googleSignIn();
     setBrazeUser(user);
     setAmplitudeUser(user, 'Google');
-    navigation.navigate('HomeNavigator', {});
+    navigation.navigate('HomeNavigator', {screen: 'Home'});
   };
 
   return (
@@ -74,7 +83,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
         <View style={styles.buttonContainer}>
           <Button
             textColor={Colors.white}
-            onPress={() => {}}
+            onPress={handleSignIn}
             style={styles.signInButton}
             mode="contained">
             Sign in

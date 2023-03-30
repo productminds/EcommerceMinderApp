@@ -1,11 +1,13 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigatorScreenParams} from '@react-navigation/native';
+
 import HomeNavigator, {HomeNavigatorTabParamList} from './HomeNavigator';
 import SigninScreen from '../screens/SigninScreen';
 import SignupScreen from '../screens/SignupScreen';
-import {useAuthContext} from '../contexts/AuthContext';
 import SplashScreen from '../screens/SplashScreen';
-import {NavigatorScreenParams} from '@react-navigation/native';
+
+import {useAuthContext} from '../contexts/AuthContext';
 
 export type MainNavigatorStackParamList = {
   HomeNavigator: NavigatorScreenParams<HomeNavigatorTabParamList>;
