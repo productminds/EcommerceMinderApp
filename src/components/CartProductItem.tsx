@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Card, IconButton, Text} from 'react-native-paper';
 import {useCartContext} from '../contexts/CartContext';
 import {CartItem} from '../domain/models/cart-item';
-import {Sizes} from '../utils/constants/theme';
+import {Colors, Sizes} from '../utils/constants/theme';
 
 interface CartProductItemProps {
   item: CartItem;
@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: Sizes.margin2,
     gap: Sizes.margin,
+    backgroundColor: Colors.lightGray,
+    borderRadius: 5,
   },
 
   cover: {
@@ -31,6 +33,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  icon: {
+    backgroundColor: Colors.primary,
+  },
+
+  quantity: {
+    marginHorizontal: Sizes.margin,
+    fontSize: Sizes.h3,
+  },
+
   actions: {
     display: 'flex',
     flexDirection: 'row',
@@ -42,7 +53,7 @@ const CartProductItem = ({item}: CartProductItemProps): JSX.Element => {
   const {addProductItem, removeProductItem} = useCartContext();
 
   return (
-    <Card mode="outlined" contentStyle={styles.cardContent}>
+    <Card mode="contained" contentStyle={styles.cardContent}>
       <View style={styles.cover}>
         <Card.Cover source={{uri: item.product.imageUri}} />
       </View>
@@ -56,11 +67,15 @@ const CartProductItem = ({item}: CartProductItemProps): JSX.Element => {
         <View style={styles.actions}>
           <IconButton
             icon="minus"
+            style={styles.icon}
+            iconColor={Colors.white}
             onPress={() => removeProductItem(item.product)}
           />
-          <Text>{item.quantity}</Text>
+          <Text style={styles.quantity}>{item.quantity}</Text>
           <IconButton
             icon="plus"
+            style={styles.icon}
+            iconColor={Colors.white}
             onPress={() => addProductItem(item.product)}
           />
         </View>

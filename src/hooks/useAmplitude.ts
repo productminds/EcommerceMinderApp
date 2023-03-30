@@ -5,8 +5,11 @@ import {Product} from '../domain/models/product';
 import {User} from '../domain/models/user';
 
 export const useAmplitude = () => {
-  const setAmplitudeUser = (user: User) => {
-    ampli.identify(user.id);
+  const setAmplitudeUser = (
+    user: User,
+    accountType: 'Google' | 'Email/Password',
+  ) => {
+    ampli.identify(user.id, {'Account Type': accountType});
   };
 
   const trackProductAddedToCart = useCallback(

@@ -4,8 +4,10 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
+import com.braze.support.BrazeLogger;
 
 public class MainActivity extends ReactActivity {
+  private static final String TAG = BrazeLogger.getBrazeLogTag(MainActivity.class);
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule

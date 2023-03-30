@@ -46,11 +46,9 @@ const styles = StyleSheet.create({
 });
 
 function App() {
-  const {subscribeToPushs} = useBraze();
+  const {init} = useBraze();
 
   if (!ampli.isLoaded) {
-    console.log(Config.AMPLI_DEVELOPMENT);
-
     ampli.load({
       environment: ensureNonNullable<Environment>(
         Config.AMPLI_DEVELOPMENT as Environment,
@@ -58,7 +56,7 @@ function App() {
     });
   }
 
-  subscribeToPushs();
+  init();
 
   return (
     <GestureHandlerRootView style={styles.gestureHandler}>

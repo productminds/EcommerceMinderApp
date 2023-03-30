@@ -1,8 +1,13 @@
 import Braze from '@braze/react-native-sdk';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
+import ContentCard from '../domain/models/content-card';
+import {Product} from '../domain/models/product';
 import {User} from '../domain/models/user';
+import {InternalException} from '../utils/exceptions/internal.exception';
 
 const useBraze = () => {
+  const [contentCards, setContentCards] = useState<ContentCard[]>([]);
+
   const subscribeToPushs = useCallback(() => {
     Braze.addListener(
       Braze.Events.PUSH_NOTIFICATION_EVENT,
@@ -14,19 +19,87 @@ const useBraze = () => {
   }, []);
 
   const setBrazeUser = useCallback(({id, email, firstName, lastName}: User) => {
+    console.log('Setting user', id, firstName);
     Braze.changeUser(id);
     Braze.setEmail(email);
     Braze.setFirstName(firstName);
     Braze.setLastName(lastName);
   }, []);
 
-  const fetchContentCards = () => {};
+  const fetchContentCards = useCallback(async () => {
+    const result = await Braze.getContentCards();
+
+    console.log(result.length);
+
+    setContentCards(
+      result
+        .filter(c => ['Captioned', 'Classic', 'Banner'].includes(c.type))
+        .map(makeContentCard),
+    );
+  }, []);
+
+  const subscribeToContentCards = useCallback(() => {
+    Braze.addListener(Braze.Events.CONTENT_CARDS_UPDATED, () => {
+      console.log('Updated content cards');
+      fetchContentCards();
+    });
+  }, [fetchContentCards]);
+
+  const logProductAdded = useCallback((product: Product) => {
+    Braze.logCustomEvent('Product Added', {
+      'Product ID': product.id,
+      'Product Name': product.name,
+    });
+    console.log('Logged');
+  }, []);
+
+  const init = useCallback(() => {
+    subscribeToPushs();
+    subscribeToContentCards();
+  }, [subscribeToPushs, subscribeToContentCards]);
 
   return {
+    contentCards,
+
     setBrazeUser,
     subscribeToPushs,
     fetchContentCards,
+    logProductAdded,
+    init,
   };
 };
+
+/** This should be refactored... somethings like a strategy pattern should be better */
+function makeContentCard(card: Braze.ContentCard): ContentCard {
+  console.log(card.type);
+
+  if (card.type === 'Classic') {
+    return new ContentCard({
+      id: card.id,
+      title: card.title,
+      message: card.cardDescription,
+      type: card.type,
+    });
+  }
+
+  if (card.type === 'Captioned') {
+    return new ContentCard({
+      id: card.id,
+      title: card.title,
+      image: card.image,
+      message: card.cardDescription,
+      type: card.type,
+    });
+  }
+
+  if (card.type === 'Banner') {
+    return new ContentCard({id: card.id, image: card.image, type: card.type});
+  }
+
+  throw new InternalException(
+    `Could not get this card type, ID: ${card}`,
+    card,
+  );
+}
 
 export default useBraze;

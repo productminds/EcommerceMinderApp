@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {TextInput} from 'react-native-paper';
+import {Colors} from '../utils/constants/theme';
 
 interface SearchBarProps {
   value?: string;
@@ -11,7 +12,11 @@ interface SearchBarProps {
 const styles = StyleSheet.create({
   searchBar: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.white,
+  },
+
+  borderInput: {
+    borderColor: Colors.primary,
   },
 });
 
@@ -25,8 +30,9 @@ const SearchBar = ({
       value={value}
       style={styles.searchBar}
       mode="outlined"
+      outlineStyle={styles.borderInput}
       placeholder="Search here.."
-      right={<TextInput.Icon icon="magnify" />}
+      right={<TextInput.Icon icon="magnify" iconColor={Colors.secondary} />}
       onChangeText={onChangeText}
       onEndEditing={e => onEndEditing(e.nativeEvent.text)}
     />

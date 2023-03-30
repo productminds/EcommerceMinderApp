@@ -9,6 +9,7 @@ import DefaultScreenLayout from '../../components/DefaultScreenLayout';
 
 import {useAuth} from '../../hooks/useAuth';
 import useBraze from '../../hooks/useBraze';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 type Props = NativeStackScreenProps<MainNavigatorStackParamList, 'Signin'>;
 
@@ -16,6 +17,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const {setBrazeUser} = useBraze();
+  const {setAmplitudeUser} = useAmplitude();
   const {googleSignIn} = useAuth();
 
   const handleSwitchToSignUp = () => {
@@ -29,6 +31,8 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
   const handleGoogleSignIn = async () => {
     const user = await googleSignIn();
     setBrazeUser(user);
+    setAmplitudeUser(user, 'Google');
+    navigation.navigate('HomeNavigator', {});
   };
 
   return (

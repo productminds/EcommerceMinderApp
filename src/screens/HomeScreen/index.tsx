@@ -11,6 +11,9 @@ import {ProductsList} from '../../components/ProductsList';
 import {useProducts} from '../../hooks/useProducts';
 import {useProductsContext} from '../../contexts/ProductsManagementContext';
 import {useAmplitude} from '../../hooks/useAmplitude';
+import {useIsFocused} from '@react-navigation/native';
+import {Colors} from '../../utils/constants/theme';
+import useBraze from '../../hooks/useBraze';
 
 const HomeScreen = (): JSX.Element => {
   const {
@@ -26,16 +29,25 @@ const HomeScreen = (): JSX.Element => {
   const {filteredProducts, setProducts} = useProductsContext();
   const [search, setSearch] = useState('');
   const {trackHomeViewed, trackSearchCompleted} = useAmplitude();
+  const {contentCards, fetchContentCards} = useBraze();
+  const isFocused = useIsFocused();
 
   const handleLoad = useCallback(() => {
     fetchAllProducts();
     fetchAllCategories();
-  }, [fetchAllProducts, fetchAllCategories]);
+    fetchContentCards();
+  }, [fetchAllProducts, fetchAllCategories, fetchContentCards]);
 
   useEffect(() => {
     handleLoad();
     trackHomeViewed();
   }, [handleLoad, trackHomeViewed]);
+
+  useEffect(() => {
+    if (isFocused) {
+      trackHomeViewed();
+    }
+  }, [isFocused, trackHomeViewed]);
 
   useEffect(() => {
     setProducts(products);
@@ -58,25 +70,12 @@ const HomeScreen = (): JSX.Element => {
           value={search}
           onChangeText={setSearch}
           onEndEditing={value =>
-            trackSearchCompleted(value, filteredProducts.length)
+            trackSearchCompleted(value, searchedProducts.length)
           }
         />
-        <IconButton icon="bell" />
+        <IconButton icon="bell" iconColor={Colors.secondary} />
       </View>
-      <ContentCards
-        data={[
-          {
-            id: 'content-card1',
-            image: 'https://unsplash.com/pt-br/fotografias/HYLfpSdpFV0',
-            title: 'Cupom de desconto',
-          },
-          {
-            id: 'content-card2',
-            image: 'https://unsplash.com/pt-br/fotografias/HYLfpSdpFV0',
-            title: 'Cupom de desconto',
-          },
-        ]}
-      />
+      <ContentCards data={contentCards} />
       <CategoryChips data={categories} />
       <ProductsList data={searchedProducts} />
     </DefaultScreenLayout>
