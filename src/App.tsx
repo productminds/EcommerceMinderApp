@@ -60,7 +60,7 @@ function App() {
 
   return (
     <GestureHandlerRootView style={styles.gestureHandler}>
-      <PaperProvider theme={{...NavigationDefaultTheme}}>
+      <PaperProvider theme={{...PaperDefaultTheme}}>
         <SafeAreaProvider>
           <AuthProvider>
             <NavigationContainer theme={CombinedDefaultTheme}>

@@ -29,13 +29,17 @@ const useBraze = () => {
   }, []);
 
   const fetchContentCards = useCallback(async () => {
-    const result = await Braze.getContentCards();
+    try {
+      const result = await Braze.getContentCards();
 
-    setContentCards(
-      result
-        .filter(c => ['Captioned', 'Classic', 'Banner'].includes(c.type))
-        .map(makeContentCard),
-    );
+      setContentCards(
+        result
+          .filter(c => ['Captioned', 'Classic', 'Banner'].includes(c.type))
+          .map(makeContentCard),
+      );
+    } catch (err) {
+      throw new InternalException('Could not fetch content cards', err);
+    }
   }, []);
 
   const subscribeToContentCards = useCallback(() => {
