@@ -11,7 +11,7 @@ export default StyleSheet.create({
     marginTop: 2 * Sizes.margin,
     height: 100,
     width: 100,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.white,
   },
   input: {
     width: '80%',

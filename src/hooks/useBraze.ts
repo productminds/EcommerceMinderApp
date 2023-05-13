@@ -21,7 +21,6 @@ const useBraze = () => {
   }, []);
 
   const setBrazeUser = useCallback(({id, email, firstName, lastName}: User) => {
-    console.log('Setting user', id, firstName);
     Braze.changeUser(id);
     Braze.setEmail(email);
     Braze.setFirstName(firstName);

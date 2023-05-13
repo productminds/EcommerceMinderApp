@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
-import {TextInput, Button, TouchableRipple} from 'react-native-paper';
+import {TextInput, Button, TouchableRipple, Avatar} from 'react-native-paper';
 
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import styles from './styles';
@@ -47,7 +47,7 @@ const SigninScreen = ({navigation}: Props): JSX.Element => {
   return (
     <DefaultScreenLayout>
       <View style={styles.subcontainer}>
-        <View style={styles.logo} />
+        <Avatar.Image style={styles.logo} size={100} source={require("../../utils/assets/icons/icon.png")}/>
         <Text style={styles.title}>Welcome back</Text>
       </View>
       <View style={styles.subcontainer}>
